@@ -1,0 +1,14 @@
+vector<string> ans;
+void solve(string &a,int l,int r){
+    if(l==r) ans.push_back(a);
+    for(int i=l;i<=r;i++){
+        swap(a[i],a[l]);
+        solve(a,l+1,r);
+        swap(a[i],a[l]);
+    }
+}
+vector<string> findPermutations(string &s) {
+    // Write your code here.
+    solve(s,0,s.size()-1);
+    return ans;
+}
