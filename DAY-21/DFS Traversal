@@ -1,0 +1,29 @@
+
+vector<int> adj[1002];
+vector<int> vis(1002,0);
+void dfs(int i,vector<int> &ans){
+    ans.push_back(i);
+    vis[i]=1;
+    for(auto it:adj[i]){
+        if(!vis[it]) dfs(it,ans);
+    }
+    return;
+}
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &e)
+{
+    // Write your code here
+    for(int i=0;i<E;i++){
+        adj[e[i][0]].push_back(e[i][1]);
+        adj[e[i][1]].push_back(e[i][0]);
+    }
+    vector<vector<int>> v;
+    
+    for(int i=0;i<V;i++){
+        if(!vis[i]) {
+            vector<int> ans;
+            dfs(i,ans);
+            v.push_back(ans);
+        }
+    }
+    return v;
+}
