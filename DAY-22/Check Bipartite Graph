@@ -1,0 +1,66 @@
+#include<bits/stdc++.h> 
+// void bfs(){
+//      int n=e.size();
+//     vector<int> adj[n];
+//     for(int i=0;i<n;i++){
+//         for(int j=i;j<n;j++)
+//         if(e[i][j]==1) {
+//             adj[i].push_back(j);
+//             adj[j].push_back(i);
+//         }
+//     }
+//     vector<int> vis(n,0);
+//     vector<int> col(n,-1);
+//     for(int i=0;i<n;i++){
+//         if(col[i]==-1){
+//         queue<int> q;
+//         q.push(i);
+//         col[i]=1;
+//         while(!q.empty()){
+//             int node=q.front();
+//             q.pop();
+//             for(auto it:adj[node]){
+//                 if(col[it]==-1) {
+//                     col[it]=1-col[node];
+//                     q.push(it);
+//                 }
+//                 else if(col[it]==col[node]) return false;
+//             }
+//         }
+//        }
+//     }
+//     return true;
+// }
+bool dfs(int i,vector<int> adj[],vector<int> &col){
+    if(col[i]==-1) col[i]=1;
+    for(auto it:adj[i]){
+        if(col[it]==-1) {
+            col[it]=1-col[i];
+            if(!dfs(it,adj,col)) return false;
+        }
+        else if(col[it]==col[i]) return false;
+        
+    }
+    return true;
+}
+bool isGraphBirpatite(vector<vector<int>> &e) {
+	// Write your code here.
+    int n=e.size();
+    vector<int> adj[n];
+    for(int i=0;i<n;i++){
+        for(int j=i;j<n;j++)
+        if(e[i][j]==1) {
+            adj[i].push_back(j);
+            adj[j].push_back(i);
+        }
+    }
+    vector<int> vis(n,0);
+    vector<int> col(n,-1);
+    for(int i=0;i<n;i++){
+        if(col[i]==-1){
+            if(!dfs(i,adj,col)) return false;
+        }
+    }
+    return true;
+    
+}
